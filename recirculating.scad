@@ -32,6 +32,18 @@ module track(h) {
   }
 }
 
+module support(h, w) {
+  linear_extrude(height=h, convexity=2) {
+    difference() {
+      square([4, length-5], center=true);
+      for (y = [-length:4:length]) {
+        translate([w, y]) square([4, 2-w], center=true);
+        translate([-w, y+2]) square([4, 2-w], center=true);
+      }
+    }
+  }
+}
+
 module half() {
   difference() {
     translate([0, 0, slot/2-thickness+1.3])
@@ -70,5 +82,6 @@ module half() {
 }
 
 half(1.5);
+translate([8.8, 0, slot/2-thickness+1.3]) support(h=7.1, w=0.6);
 
 translate([15, 0, 0]) % cube([15, 100, 15], center=true);
